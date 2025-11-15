@@ -1,0 +1,49 @@
+-- Script de verificação de usuário para Hub
+local allowedUsers = {
+    "GOJODEV73",
+    "meliodas1wrt",
+    "Vinilatas",
+    "Kingstongh90",
+    "bxbhcrbyf"
+}
+
+local player = game.Players.LocalPlayer
+local userName = player.Name
+
+local isAllowed = false
+for _, allowedName in pairs(allowedUsers) do
+    if userName == allowedName then
+        isAllowed = true
+        break
+    end
+end
+
+-- URL do primeiro script (DevHub)
+local hubUrl = "https://raw.githubusercontent.com/Vini123455773727727272/ChocolatePretoHub/refs/heads/main/DevHub.txt?token=GHSAT0AAAAAADOHLIVWZLX25ERTOHMCN2XU2IYXUYA"
+
+-- Sempre carrega o primeiro script
+local success, err = pcall(function()
+    loadstring(game:HttpGet(hubUrl))()
+end)
+
+if not success then
+    warn("Erro ao carregar o Hub principal: " .. tostring(err))
+end
+
+-- Se for usuário permitido, carrega o segundo script também (DevClient)
+if isAllowed then
+    local clientUrl = "https://raw.githubusercontent.com/Vini123455773727727272/CalmaChocolateBrancoHub/refs/heads/main/DevClientfuncional.txt?token=GHSAT0AAAAAADOHLIVWOUAJQKMI4GKVS7EK2IYXSOA"
+    local clientSuccess, clientErr = pcall(function()
+        loadstring(game:HttpGet(clientUrl))()
+    end)
+    
+    if not clientSuccess then
+        warn("Erro ao carregar o Client: " .. tostring(clientErr))
+    else
+        print("Client carregado para usuário permitido: " .. userName)
+    end
+else
+    print("Acesso ao Client negado para: " .. userName)
+end
+
+print("Script de verificação concluído para: " .. userName)
